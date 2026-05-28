@@ -12,8 +12,6 @@ import org.lwjgl.glfw.GLFW;
 import fr.madu59.ptp.config.Option;
 import fr.madu59.ptp.config.SettingsManager;
 import fr.madu59.ptp.config.configScreen.PtpConfigScreen;
-import fr.madu59.ptp.HandshakeNetworking.HANDSHAKE_C2SPayload;
-import fr.madu59.ptp.HandshakeNetworking.HANDSHAKE_S2CPayload;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -21,15 +19,15 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.HumanoidArm;
@@ -49,7 +47,6 @@ public class PtpClient implements ClientModInitializer {
 
     private static final Minecraft client = Minecraft.getInstance();
     public static final Logger LOGGER = LogManager.getLogger("ptpClient");
-    private static boolean serverHasMod = false;
     private static KeyMapping itemDropKey;
     private static KeyMapping toggleKey;
     private static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(Identifier.fromNamespaceAndPath("ptp", "ptp"));
@@ -59,33 +56,6 @@ public class PtpClient implements ClientModInitializer {
     public void onInitializeClient() {
         PtpConfigScreen.registerCommand();
         registerKeyMappings();
-
-        // Reset handshake state on join
-        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
-            serverHasMod = false;
-
-            // Always enabled in singleplayer
-            if (client.hasSingleplayerServer()) {
-                serverHasMod = true;
-                return;
-            }
-
-            // Send handshake to server
-            if(ClientPlayNetworking.canSend(HANDSHAKE_C2SPayload.ID)) {
-                LOGGER.info("[PTP] Sending handshake to server...");
-                ClientPlayNetworking.send(new HANDSHAKE_C2SPayload("Check if is installed on server"));
-            }
-            else{
-                LOGGER.info("[PTP] Can't send handshake to server! Server mod might be too old or missing.");
-            }
-        });
-
-        // Receive handshake reply
-        ClientPlayNetworking.registerGlobalReceiver(HANDSHAKE_S2CPayload.ID,
-            (payload, context) -> {
-                LOGGER.info("[PTP] Received handshake from server!");
-                serverHasMod = true;
-        });
         
         WorldRenderEvents.AFTER_ENTITIES.register(context -> {
             renderOverlay(context);
@@ -341,11 +311,24 @@ public class PtpClient implements ClientModInitializer {
     }
 
     public static boolean isEnabled() {
-        return client.hasSingleplayerServer() || serverHasMod;
+        // Multiplayer support: keep previews client-side without server checks or packets.
+        return true;
     }
 
     public static boolean isEnabled(ProjectileInfo projectileInfo) {
-        return client.hasSingleplayerServer() || serverHasMod || projectileInfo.bypassAntiCheat;
+        // Multiplayer support: rely only on local client state when deciding to render.
+        return true;
+    }
+
+    public static Component getMultiplayerStatusText() {
+        // Multiplayer support: status is derived purely from client connection state.
+        if (client.getConnection() == null) {
+            return Component.translatable("ptp.status.no_world").withStyle(ChatFormatting.GRAY);
+        }
+        if (client.hasSingleplayerServer()) {
+            return Component.translatable("ptp.status.singleplayer").withStyle(ChatFormatting.GRAY);
+        }
+        return Component.translatable("ptp.status.multiplayer_active").withStyle(ChatFormatting.GOLD);
     }
 
     private static void registerKeyMappings() {

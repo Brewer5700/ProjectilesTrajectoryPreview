@@ -27,6 +27,10 @@
   "ptp.config.enabled": "已啟用",
   "ptp.config.disabled": "已停用",
   "ptp.config.projectile-toggle": "按物品切換",
+  "ptp.status.header": "STATUS",
+  "ptp.status.no_world": "No world loaded",
+  "ptp.status.singleplayer": "Singleplayer",
+  "ptp.status.multiplayer_active": "Multiplayer: Active (client-only)",
 
   "ENABLED": "已啟用",
   "DISABLED": "已停用",

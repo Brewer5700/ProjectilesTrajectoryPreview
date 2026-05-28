@@ -31,7 +31,7 @@ To edit the settings of the mod:
 
 ## 🛑 Usage on servers 
 
-This mod doesn't work on servers to prevent using it as a cheat in PVP. If you want to have it on your custom servers, you still can, just install the mod on both, the client and the server.
+This mod now works as a client-side-only preview on vanilla servers, as long as you have permission from the server owner. It does not require or modify any server-side components and only uses information available to the client.
 
 ## 📦 Modpack
 

@@ -27,6 +27,10 @@
   "ptp.config.enabled": "활성",
   "ptp.config.disabled": "비활성",
   "ptp.config.projectile-toggle": "아이템별 토글",
+  "ptp.status.header": "STATUS",
+  "ptp.status.no_world": "No world loaded",
+  "ptp.status.singleplayer": "Singleplayer",
+  "ptp.status.multiplayer_active": "Multiplayer: Active (client-only)",
 
   "ENABLED": "활성",
   "DISABLED": "비활성",

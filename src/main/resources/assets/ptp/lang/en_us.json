@@ -27,6 +27,10 @@
   "ptp.config.enabled":"Enabled",
   "ptp.config.disabled":"Disabled",
   "ptp.config.projectile-toggle":"PER ITEM TOGGLE",
+  "ptp.status.header": "STATUS",
+  "ptp.status.no_world": "No world loaded",
+  "ptp.status.singleplayer": "Singleplayer",
+  "ptp.status.multiplayer_active": "Multiplayer: Active (client-only)",
 
   "ENABLED": "Enabled",
   "DISABLED": "Disabled",

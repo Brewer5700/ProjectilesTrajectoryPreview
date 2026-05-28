@@ -27,6 +27,10 @@
   "ptp.config.enabled":"Activé",
   "ptp.config.disabled":"Désactivé",
   "ptp.config.projectile-toggle": "ACTIVATION PAR OBJET",
+  "ptp.status.header": "STATUT",
+  "ptp.status.no_world": "Aucun monde chargé",
+  "ptp.status.singleplayer": "Solo",
+  "ptp.status.multiplayer_active": "Multijoueur : Actif (client uniquement)",
 
   "ENABLED": "Activé",
   "DISABLED": "Désactivé",

@@ -27,6 +27,10 @@
   "ptp.config.enabled": "Aktiviert",
   "ptp.config.disabled": "Deaktiviert",
   "ptp.config.projectile-toggle": "PRO GEGENSTAND UMSCHALTEN",
+  "ptp.status.header": "STATUS",
+  "ptp.status.no_world": "No world loaded",
+  "ptp.status.singleplayer": "Singleplayer",
+  "ptp.status.multiplayer_active": "Multiplayer: Active (client-only)",
 
   "ENABLED": "Aktiviert",
   "DISABLED": "Deaktiviert",

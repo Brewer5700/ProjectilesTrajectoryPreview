@@ -38,6 +38,10 @@ public class MyConfigListWidget extends ContainerObjectSelectionList<MyConfigLis
         this.addEntry(new CategoryEntry(name));
     }
 
+    public void addTextLine(Component text) {
+        this.addEntry(new TextEntry(text));
+    }
+
     public void addButton(String name, Button.OnPress onPress) {
         this.addEntry(new ButtonEntry(Button.builder(Component.literal(name), onPress).bounds(0, 0, 100, 20).build(), null, ""));
     }
@@ -131,6 +135,31 @@ public class MyConfigListWidget extends ContainerObjectSelectionList<MyConfigLis
             int textY = getContentY() + (getContentHeight() - textRenderer.lineHeight) / 2;
             context.drawCenteredString(textRenderer, Component.translatable(this.name).withStyle(ChatFormatting.UNDERLINE), textX, textY, 0xFFFFFFFF);
         }  
+
+        @Override
+        public List<? extends NarratableEntry> narratables() {
+            return List.of();
+        }
+
+        @Override
+        public List<? extends GuiEventListener> children() {
+            return List.of();
+        }
+    }
+
+    // Text-only entry
+    public static class TextEntry extends fr.madu59.ptp.config.configScreen.MyConfigListWidget.Entry {
+        private final Component text;
+
+        public TextEntry(Component text) {
+            this.text = text;
+        }
+
+        @Override
+        public void renderContent(GuiGraphics context, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+            Font textRenderer = Minecraft.getInstance().font;
+            context.drawString(textRenderer, this.text, 10, this.getContentY() + (this.getContentHeight() - textRenderer.lineHeight) / 2, 0xFFFFFFFF, true);
+        }
 
         @Override
         public List<? extends NarratableEntry> narratables() {

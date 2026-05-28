@@ -27,6 +27,10 @@
   "ptp.config.enabled":"Включено",
   "ptp.config.disabled":"Выключено",
   "ptp.config.projectile-toggle": "ПЕРЕКЛЮЧАТЕЛЬ ДЛЯ КАЖДОГО ПРЕДМЕТА",
+  "ptp.status.header": "STATUS",
+  "ptp.status.no_world": "No world loaded",
+  "ptp.status.singleplayer": "Singleplayer",
+  "ptp.status.multiplayer_active": "Multiplayer: Active (client-only)",
 
   "ENABLED": "Включено",
   "DISABLED": "Выключено",

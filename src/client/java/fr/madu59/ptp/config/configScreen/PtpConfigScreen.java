@@ -1,5 +1,6 @@
 package fr.madu59.ptp.config.configScreen;
 
+import fr.madu59.ptp.PtpClient;
 import fr.madu59.ptp.config.SettingsManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.*;
@@ -38,6 +39,10 @@ public class PtpConfigScreen extends Screen {
         super.init();
         // Create the scrolling list
         this.list = new MyConfigListWidget(this.minecraft, this.width, this.height - 80, 40, 26);
+
+        // Multiplayer support: show client-only status when connected to a server.
+        list.addCategory("ptp.status.header");
+        list.addTextLine(PtpClient.getMultiplayerStatusText());
 
         // Example: Add categories + buttons
         list.addCategory("ptp.config.trajectory-previsualization");
